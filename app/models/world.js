@@ -6,9 +6,10 @@ define([
   'models/feature',
   'geofeeds/remoteStorage',
   'geofeeds/device',
+  'geofeeds/bayeux',
   'models/user'
 ], function(_, Backbone, GeoJSONFeed, FeatureCollection, Feature,
-            RemoteStorageFeed, DeviceFeed, User ) {
+            RemoteStorageFeed, DeviceFeed, BayeuxFeed, User ) {
 
   /*
    * Class: World
@@ -51,6 +52,9 @@ define([
       // @elf-pavlik: Document this.
       this.geoFeeds = this.createFeeds(this.config.geoFeeds);
 
+      this.buddyFeed = new BayeuxFeed({url:'http://192.168.1.30:8888/faye'});
+
+      // DOCUME
       this.aether = _.extend({ user: this.user }, Backbone.Events);
 
 

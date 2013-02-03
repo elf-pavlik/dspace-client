@@ -22,6 +22,7 @@
     , "almond": "*"
     , "zombie": "*"
     , "mocha-phantomjs": "*"
+    , "faye": "*"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha-phantomjs http://localhost:3000/index.test.html"

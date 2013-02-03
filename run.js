@@ -1,3 +1,12 @@
+/**
+ * faye server for pubsub
+ */
+var http = require("http");
+var Faye   = require('faye');
+bayeux = new Faye.NodeAdapter({mount: '/faye'});
+bayeux.listen(8888);
+console.log('faye started');
+
 /***
  *
  *  DSpace-Development Server
