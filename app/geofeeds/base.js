@@ -20,6 +20,11 @@ define([
       this.collection.on('add', function() {
         this.trigger('change', this);
       }.bind(this));
+
+      /**
+       * run setup in case subclases define one
+       */
+      if(this.setup){this.setup();}
     },
 
     updateCollection: function(collection, reset) {
