@@ -161,7 +161,6 @@ define([
        * changed features to the markerlayer and redraw;
        */
       this.userLayer = this.addOverlay( this.world.user.feed );
-
       /**
        * need frame
        */
@@ -172,7 +171,12 @@ define([
 	      }
       });
 
+      this.buddyLayer = this.addOverlay( this.world.buddyFeed );
 
+      //FIXME listine on 'change' or sth?
+      this.world.buddyFeed.collection.on( 'all', function( e ){
+        self.buddyLayer.render( );
+      });
 
     },
     /**

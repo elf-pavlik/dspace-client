@@ -47,8 +47,6 @@ define([
       } else {
         this.featureIndex[uuid].set(feature);
       }
-
-      console.log(this.featureIndex);
     }
   });
 });

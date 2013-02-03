@@ -52,7 +52,9 @@ define([
       // @elf-pavlik: Document this.
       this.geoFeeds = this.createFeeds(this.config.geoFeeds);
 
-      this.buddyFeed = new BayeuxFeed({url:'http://192.168.1.30:8888/faye'});
+      this.buddyFeed = new BayeuxFeed({
+        url:'http://192.168.1.30:8888/faye',
+        visible: true});
 
       // DOCUME
       this.aether = _.extend({ user: this.user }, Backbone.Events);
