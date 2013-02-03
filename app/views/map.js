@@ -97,6 +97,7 @@ define([
       this.world = this.options.world;
       this.dspace = this.options.dspace;
       this.config = this.world.config.map;
+      this.overlays = [];
 
       var self = this;
       this.world.on('change', function(event, data){
@@ -150,8 +151,8 @@ define([
        */
       this.frame = this.createFrame();
 
-      this.overlays = this.world.geoFeeds.map(function(feed) {
-        self.addOverlay( feed ).render( );
+      this.world.geoFeeds.map(function(feed) {
+        this.addOverlay( feed ).render( );
       }.bind(this));
 
       /**
@@ -167,9 +168,9 @@ define([
       var self = this;
       this.world.user.feed.collection.on( 'change:geometry', function( e ){
         console.log('DEVICE', this.world.user.collection.length); //FIXME when it trigers?
-        if( e.id == 'avatar' ) {
-	        //self.userLayer.render( );
-	      }
+        if( e.id === 'avatar' ) {
+          //self.userLayer.render( );
+        }
       });
 
       this.buddyLayer = this.addOverlay( this.world.buddyFeed );
@@ -180,9 +181,11 @@ define([
      * returns overlay 
      */
     addOverlay: function( feed ){
-        return new Overlay({ 
-          map: this, 
-          feed: feed })
+      var overlay = new Overlay({
+          map: this,
+          feed: feed });
+      this.overlays.push(overlay);
+      return overlay;
     },
 
     recenter: function(){

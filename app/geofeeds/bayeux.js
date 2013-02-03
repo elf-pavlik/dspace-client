@@ -45,9 +45,12 @@ define([
         var feature = new Feature(featureJson);
         this.featureIndex[uuid] = feature;
         this.collection.add(feature);
+        this.collection.trigger('feed'); //FIXME hack to avoid phantom first feature
       } else {
-        this.featureIndex[uuid].set(featureJson);
-        this.collection.trigger('change');
+        if(JSON.stringify(featureJson) != JSON.stringify(this.featureIndex[uuid].toJSON())){
+          this.featureIndex[uuid].set(featureJson);
+          this.collection.trigger('feed');
+        }
       }
     },
 
@@ -60,11 +63,8 @@ define([
      *
      *  featureJson - <Feature.toJSON>
      */
-    publish: function(avatar){
-      console.log('P', avatar.get('geometry').coordinates[0]);
-      console.log(JSON.stringify(avatar));
-      console.log('BUDDY', this.collection.length);
-      this.bayeux.publish(this.chan, avatar.toJSON());
+    publish: function(featureJson){
+      this.bayeux.publish(this.chan, featureJson);
     }
   });
 });

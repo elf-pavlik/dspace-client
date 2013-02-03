@@ -20,14 +20,12 @@ define(['backbone', 'markers', 'views/marker', 'templateMap'], function(Backbone
        * convienience accessor to map
        */
       this.map = this.options.map;
-
       this.feed = this.options.feed;
 
-      var self = this;
-      this.feed.collection.on( 'change', function(){
-        console.log('feed change');
-        self.render( );
-      });
+      //FIXME replace custom feed! - breaks regular markers!
+      this.feed.collection.on( 'feed', function(){
+        this.render();
+      }.bind(this));
     },
 
     render: function() {
@@ -40,17 +38,13 @@ define(['backbone', 'markers', 'views/marker', 'templateMap'], function(Backbone
     },
 
     show: function() {
-      if(this.feed.collection.length > 0){
-        console.log('FIRST', this.feed.collection.models[0].get('geometry').coordinates[0]);
-      }
       this.hide();
       this.layer = this.addMapLayer(this.feed.collection);
     },
 
     hide: function() {
       if(this.layer) {
-        console.log('destroy!');
-        this.layer.destroy();
+        this.map.frame.removeLayer(this.layer); //FIXME layer.destroy() didn't work... why?
       }
     },
 
@@ -64,6 +58,7 @@ define(['backbone', 'markers', 'views/marker', 'templateMap'], function(Backbone
        * Add markers
        * mapbox lib NOT same as ModestMap
        */
+
       var markerLayer = markers.layer();
 
       /**
@@ -92,6 +87,4 @@ define(['backbone', 'markers', 'views/marker', 'templateMap'], function(Backbone
 
   });
   return Overlay;
-
-
 });

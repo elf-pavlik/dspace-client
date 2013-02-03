@@ -26,10 +26,10 @@ define([
 
       this.feed.avatar.on('position-changed', function(latlon) {
         this.trigger('location-changed', latlon);
-        this.feed.trigger('change');
+        this.feed.trigger('change'); //FIXME DOCUME
         if(this.world.buddyFeed){
           if(this.feed.avatar){
-          this.world.buddyFeed.publish(this.feed.avatar); //FIXME do toJSON()
+            this.world.buddyFeed.publish(this.feed.avatar.toJSON());
           }
         }
       }.bind(this));
