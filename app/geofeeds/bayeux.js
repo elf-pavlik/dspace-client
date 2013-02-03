@@ -26,9 +26,10 @@ define([
       this.featureIndex = {};
 
       var url = this.get('url');
+      this.chan = '/'+ this.get('chan');
       var faye = window.faye; //FIXME require !!!
       var bayeux = new faye.Client(url);
-      bayeux.subscribe('/faye', this.onMessage.bind(this));
+      bayeux.subscribe(this.chan, this.onMessage.bind(this));
       this.bayeux = bayeux;
 
     },
@@ -45,8 +46,25 @@ define([
         this.featureIndex[uuid] = feature;
         this.collection.add(feature);
       } else {
-        this.featureIndex[uuid].set(feature);
+        this.featureIndex[uuid].set(featureJson);
+        this.collection.trigger('change');
       }
+    },
+
+    /**
+     * Method: publish
+     *
+     * publishes feature to channel
+     *
+     * Receives:
+     *
+     *  featureJson - <Feature.toJSON>
+     */
+    publish: function(avatar){
+      console.log('P', avatar.get('geometry').coordinates[0]);
+      console.log(JSON.stringify(avatar));
+      console.log('BUDDY', this.collection.length);
+      this.bayeux.publish(this.chan, avatar.toJSON());
     }
   });
 });

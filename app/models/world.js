@@ -54,6 +54,7 @@ define([
 
       this.buddyFeed = new BayeuxFeed({
         url:'http://192.168.1.30:8888/faye',
+        chan: 'faye',
         visible: true});
 
       // DOCUME
@@ -79,7 +80,7 @@ define([
      *
      */
     setupUser: function(config){
-      return User.first() || new User({ config: config });
+      return User.first() || new User({ config: config, world: this });
     },
 
     /**

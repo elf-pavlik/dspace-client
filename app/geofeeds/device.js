@@ -19,7 +19,10 @@ define([
         if(this.collection.length === 0) {
           this.collection.add(this.avatar);
         }
-        this.avatar.setLatLon(position.coords.latitude, position.coords.longitude);
+        //FIXME why parseFloat ?
+        this.avatar.setLatLon(
+          parseFloat(position.coords.latitude),
+          parseFloat(position.coords.longitude));
       }.bind(this));
     }
 

@@ -14,7 +14,7 @@ define([
     // Method: initialize
     initialize: function() {
       backboneLocalStorage.setup(this, 'users');
-
+      this.world = this.get('world');
       this.feed = new DeviceFeed({
         avatar: new Feature({
           properties: {
@@ -27,6 +27,11 @@ define([
       this.feed.avatar.on('position-changed', function(latlon) {
         this.trigger('location-changed', latlon);
         this.feed.trigger('change');
+        if(this.world.buddyFeed){
+          if(this.feed.avatar){
+          this.world.buddyFeed.publish(this.feed.avatar); //FIXME do toJSON()
+          }
+        }
       }.bind(this));
 
       this.feed.watch();

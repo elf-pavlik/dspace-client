@@ -24,7 +24,8 @@ define(['backbone', 'markers', 'views/marker', 'templateMap'], function(Backbone
       this.feed = this.options.feed;
 
       var self = this;
-      this.feed.on( 'change', function( event, data ){
+      this.feed.collection.on( 'change', function(){
+        console.log('feed change');
         self.render( );
       });
     },
@@ -39,12 +40,16 @@ define(['backbone', 'markers', 'views/marker', 'templateMap'], function(Backbone
     },
 
     show: function() {
+      if(this.feed.collection.length > 0){
+        console.log('FIRST', this.feed.collection.models[0].get('geometry').coordinates[0]);
+      }
       this.hide();
       this.layer = this.addMapLayer(this.feed.collection);
     },
 
     hide: function() {
       if(this.layer) {
+        console.log('destroy!');
         this.layer.destroy();
       }
     },

@@ -113,7 +113,7 @@ define([
           location: JSON.stringify(this.frame.pointLocation(point)),
           modal: 'addFeature'
         });
-        
+        // FIXME
         // var location = this.frame.pointLocation(point);
         // var dialog = new AddFeature(location, { aether: this.world.aether });
         // dialog.render();
@@ -160,23 +160,19 @@ define([
        * when the usercollection changes pushes the 
        * changed features to the markerlayer and redraw;
        */
-      this.userLayer = this.addOverlay( this.world.user.feed );
+      // FIXME this.userLayer = this.addOverlay( this.world.user.feed );
       /**
        * need frame
        */
       var self = this;
       this.world.user.feed.collection.on( 'change:geometry', function( e ){
+        console.log('DEVICE', this.world.user.collection.length); //FIXME when it trigers?
         if( e.id == 'avatar' ) {
-	        self.userLayer.render( );
+	        //self.userLayer.render( );
 	      }
       });
 
       this.buddyLayer = this.addOverlay( this.world.buddyFeed );
-
-      //FIXME listine on 'change' or sth?
-      this.world.buddyFeed.collection.on( 'all', function( e ){
-        self.buddyLayer.render( );
-      });
 
     },
     /**
